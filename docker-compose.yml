@@ -17,11 +17,11 @@ services:
     networks:
       - umkm_network
 
-  backend:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: backend
+    container_name: app
     restart: unless-stopped
     ports:
       - "8000:8000"
