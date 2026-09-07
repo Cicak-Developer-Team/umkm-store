@@ -1,23 +1,20 @@
 FROM php:8.2-fpm
 
+# Install dependensi sistem & ekstensi PHP untuk Laravel
 RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    zip \
-    unzip \
     git \
-    curl
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip
 
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql
+# Install ekstensi MySQL & pendukung Laravel
+RUN docker-php-ext-install pdo_mysql mbstring gd bcmath
 
+# Copy Composer resmi
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www
-
-COPY . .
-
-RUN composer install --no-dev --optimize-autoloader
-
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+# Tentukan direktori kerja di dalam kontainer
+WORKDIR /var/www/html
