@@ -49,17 +49,18 @@ DB_PASSWORD=password
 ```
 *(Catatan: Jika dijalankan di dalam container, `DB_HOST` akan secara otomatis diarahkan ke container database `db`.)*
 
-### 3. Build & Jalankan Container Docker
+### 3. Install Dependensi PHP (Composer)
+Unduh dan install seluruh package/dependensi PHP yang dibutuhkan aplikasi:
+```bash
+docker-compose run --rm app composer install
+```
+
+### 4. Build & Jalankan Container Docker
 Jalankan Docker Compose untuk mengunduh image, melakukan build, dan menjalankan container di latar belakang (*detached mode*):
 ```bash
 docker-compose up -d --build
 ```
 
-### 4. Install Dependensi PHP (Composer)
-Unduh dan install seluruh package/dependensi PHP yang dibutuhkan aplikasi:
-```bash
-docker-compose exec app composer install
-```
 
 ### 5. Generate Application Key
 Buat key keamanan unik untuk aplikasi Laravel Anda:
