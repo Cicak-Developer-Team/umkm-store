@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: umkm_store_app
+    volumes:
+      - .:/var/www
+    environment:
+      - DB_HOST=db
+    networks:
+      - umkm_network
+
+  db:
+    image: mysql:8.0
+    container_name: umkm_store_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
+    networks:
+      - umkm_network
+
+networks:
+  umkm_network:
+    driver: bridge
